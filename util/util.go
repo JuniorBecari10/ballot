@@ -1,10 +1,14 @@
-package main
+package util
 
 import (
+  "fmt"
   "runtime"
   "os/exec"
   "os"
+  "bufio"
 )
+
+var Scanner *bufio.Scanner = bufio.NewScanner(os.Stdin)
 
 func Clear() {
   switch runtime.GOOS {
@@ -20,4 +24,8 @@ func Clear() {
       cmd.Run()
       break
   }
+}
+
+func PrintName() {
+  fmt.Println("Ballot Box Creator")
 }

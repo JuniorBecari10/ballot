@@ -2,18 +2,22 @@ package main
 
 import (
   "fmt"
-  "bufio"
   "os"
+  
+  "ballot/creator"
+  "ballot/util"
 )
 
 func main() {
-  sc := bufio.NewScanner(os.Stdin)
-  
+  MainMenu()
+}
+
+func MainMenu() {
   for {
-    Clear()
-    fmt.Println("Ballot Box Creator\n")
+    util.Clear()
+    util.PrintName()
     
-    fmt.Println("Choose an option:\n")
+    fmt.Println("\nChoose an option:\n")
     
     fmt.Println("1 - Create new ballot box")
     fmt.Println("2 - Open an existing ballot box")
@@ -21,18 +25,20 @@ func main() {
     fmt.Println("0 - Exit")
     
     fmt.Print("\n> ")
-    sc.Scan()
-    op := sc.Text()
+    util.Scanner.Scan()
+    op := util.Scanner.Text()
     
     switch op {
       case "1":
+        creator.CreateMenu()
+        creator.MainMenu()
         break
       
       case "2":
         break
       
       case "0":
-        Clear()
+        util.Clear()
         os.Exit(0)
     }
   }
