@@ -66,14 +66,25 @@ func EditCandidate(s *Section, c *Candidate) {
           break
         }
         
+        br := false
+        
         for _, c := range s.Candidates {
           if c.Number == number {
+            br = true
             break
           }
         }
         
+        if br {
+          break
+        }
+        
         if len(number) != s.NumberLength {
           break
+        }
+        
+        if number == "" {
+          return
         }
         
         c.Number = number

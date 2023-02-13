@@ -19,11 +19,18 @@ func NewBallot(name string) *Ballot {
   return &Ballot { Name: name }
 }
 
-func CreateMenu() {
+func CreateMenu() bool {
   fmt.Print("Enter the ballot name: ")
   util.Scanner.Scan()
   
-  editing = NewBallot(util.Scanner.Text())
+  name := util.Scanner.Text()
+  
+  if name == "" {
+    return false
+  }
+  
+  editing = NewBallot(name)
+  return true
 }
 
 func MainMenu() {
@@ -124,7 +131,13 @@ func EditBallotName() {
   fmt.Print("Enter the new ballot name: ")
   util.Scanner.Scan()
   
-  editing.Name = util.Scanner.Text()
+  name := util.Scanner.Text()
+  
+  if name == "" {
+    return
+  }
+  
+  editing.Name = name
 }
 
 // ----
@@ -133,6 +146,10 @@ func AddSection() {
   fmt.Print("Enter the section name: ")
   util.Scanner.Scan()
   name := util.Scanner.Text()
+  
+  if name == "" {
+    return
+  }
   
   for _, s := range editing.Sections {
     if strings.ToLower(s.Name) == strings.ToLower(name) {

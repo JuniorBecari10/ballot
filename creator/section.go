@@ -26,8 +26,8 @@ func EditSection(section *Section) {
     
     fmt.Println("\nChoose an option:\n")
     
-    fmt.Println("1 - Edit section name")
-    fmt.Println("2 - Edit candidates")
+    fmt.Println("1 - Edit candidates")
+    fmt.Println("2 - Edit section name")
     
     fmt.Println("0 - Go back")
     
@@ -37,11 +37,11 @@ func EditSection(section *Section) {
     
     switch op {
       case "1":
-        EditSectionName(section)
+        EditCandidates(section)
         break
       
       case "2":
-        EditCandidates(section)
+        EditSectionName(section)
         break
       
       case "0":
@@ -55,6 +55,10 @@ func EditSectionName(s *Section) {
   util.Scanner.Scan()
   
   name := util.Scanner.Text()
+  
+  if name == "" {
+    return
+  }
   
   for _, s := range editing.Sections {
     if strings.ToLower(s.Name) == strings.ToLower(name) {
@@ -155,6 +159,10 @@ func AddCandidate(s *Section) {
   }
   
   if len(number) != s.NumberLength {
+    return
+  }
+  
+  if number == "" {
     return
   }
   

@@ -30,8 +30,9 @@ func MainMenu() {
     
     switch op {
       case "1":
-        creator.CreateMenu()
-        creator.MainMenu()
+        if creator.CreateMenu() {
+          creator.MainMenu()
+        }
         break
       
       case "2":
