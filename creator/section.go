@@ -9,7 +9,7 @@ import (
 
 type Section struct {
   Name string
-  Candidates []Candidate
+  Candidates []*Candidate
   NumberLength int
 }
 
@@ -22,6 +22,10 @@ type Candidate struct {
   Vice string
   
   Number string // yes, a string. Because you can set "05" as a number.
+}
+
+func NewCandidate(name string, vice string, number string) *Candidate {
+  return &Candidate { Name: name, Vice: vice, Number: number }
 }
 
 func EditSection(section *Section) {
@@ -95,7 +99,7 @@ func EditCandidates(s *Section) {
     
     switch op {
       case "1":
-        AddCandidate()
+        AddCandidate(s)
         break
       
       case "2":
@@ -108,7 +112,7 @@ func EditCandidates(s *Section) {
         
         for _, cd := range s.Candidates {
           if cd.Name == name {
-            c = sd
+            c = cd
           }
         }
         
@@ -116,7 +120,7 @@ func EditCandidates(s *Section) {
           break
         }
         
-        EditCandidate(s)
+        //EditCandidate(s)
         break
       
       case "0":
@@ -125,11 +129,9 @@ func EditCandidates(s *Section) {
   }
 }
 
-// ---
-
 // ----
 
-func AddCandidate() {
+func AddCandidate(s *Section) {
   fmt.Print("Enter the candidate name: ")
   util.Scanner.Scan()
   name := util.Scanner.Text()
@@ -140,15 +142,25 @@ func AddCandidate() {
   
   fmt.Print("Enter the number: ")
   util.Scanner.Scan()
-  nb := util.Scanner.Text()
+  number := util.Scanner.Text()
   
+  _, err := strconv.Atoi(number)
   
+  if err != nil {
+    return
+  }
+  
+  for _, c := range s.Candidates {
+    if c.Number == number {
+      return
+    }
+  }
   
   s.Candidates = append(s.Candidates, NewCandidate(name, vice, number))
 }
 
-func GetSectionName() string {
-  fmt.Print("Enter the section name: ")
+func GetCandidateName() string {
+  fmt.Print("Enter the candidate name: ")
   util.Scanner.Scan()
   
   return util.Scanner.Text()
