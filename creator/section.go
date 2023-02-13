@@ -4,6 +4,7 @@ import (
   "fmt"
   
   "ballot/util"
+  "strings"
   "strconv"
 )
 
@@ -15,17 +16,6 @@ type Section struct {
 
 func NewSection(name string, numberLen int) *Section {
   return &Section { Name: name, NumberLength: numberLen }
-}
-
-type Candidate struct {
-  Name string
-  Vice string
-  
-  Number string // yes, a string. Because you can set "05" as a number.
-}
-
-func NewCandidate(name string, vice string, number string) *Candidate {
-  return &Candidate { Name: name, Vice: vice, Number: number }
 }
 
 func EditSection(section *Section) {
@@ -51,7 +41,7 @@ func EditSection(section *Section) {
         break
       
       case "2":
-        
+        EditCandidates(section)
         break
       
       case "0":
@@ -71,7 +61,7 @@ func EditCandidates(s *Section) {
   for {
     util.Clear()
     util.PrintName()
-    fmt.Printf("Editing ballot %s / section %s / candidates\n", s.Name)
+    fmt.Printf("Editing ballot %s / section %s / candidates\n", editing.Name, s.Name)
     
     fmt.Println("\nCandidates:\n")
     
@@ -107,11 +97,11 @@ func EditCandidates(s *Section) {
           break
         }
         
-        name := GetCandidateName()
+        number := GetCandidateNumber()
         var c *Candidate = nil
         
         for _, cd := range s.Candidates {
-          if cd.Name == name {
+          if strings.ToLower(cd.Number) == strings.ToLower(number) {
             c = cd
           }
         }
@@ -120,7 +110,7 @@ func EditCandidates(s *Section) {
           break
         }
         
-        //EditCandidate(s)
+        EditCandidate(s, c)
         break
       
       case "0":
@@ -159,8 +149,8 @@ func AddCandidate(s *Section) {
   s.Candidates = append(s.Candidates, NewCandidate(name, vice, number))
 }
 
-func GetCandidateName() string {
-  fmt.Print("Enter the candidate name: ")
+func GetCandidateNumber() string {
+  fmt.Print("Enter the candidate number: ")
   util.Scanner.Scan()
   
   return util.Scanner.Text()

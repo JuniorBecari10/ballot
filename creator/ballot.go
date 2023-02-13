@@ -4,6 +4,7 @@ import (
   "fmt"
   
   "ballot/util"
+  "strings"
   "strconv"
 )
 
@@ -101,7 +102,7 @@ func EditSections() {
         var s *Section = nil
         
         for _, sc := range editing.Sections {
-          if sc.Name == name {
+          if strings.ToLower(sc.Name) == strings.ToLower(name) {
             s = sc
           }
         }
@@ -132,6 +133,12 @@ func AddSection() {
   fmt.Print("Enter the section name: ")
   util.Scanner.Scan()
   name := util.Scanner.Text()
+  
+  for _, s := range editing.Sections {
+    if strings.ToLower(s.Name) == strings.ToLower(name) {
+      return
+    }
+  }
   
   fmt.Print("Enter the number length: ")
   util.Scanner.Scan()
