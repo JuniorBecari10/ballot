@@ -8,21 +8,25 @@ import (
 
 var editing *Ballot
 
-// test
-type Candidate int
-type Section int
-
 type Ballot struct {
-  name string
+  Name string
+  Sections []Section  
+}
+
+type Section struct {
+  Candidates []Candidate
+  NumberLength int
+}
+
+type Candidate struct {
+  Name string
+  Vice string
   
-  candidates []Candidate
-  sections []Section
-  
-  saved bool
+  Number string // yes, a string. Because you can set "05" as a number.
 }
 
 func NewBallot(name string) *Ballot {
-  return &Ballot { name: name, saved: false }
+  return &Ballot { Name: name }
 }
 
 func CreateMenu() {
@@ -30,20 +34,18 @@ func CreateMenu() {
   util.Scanner.Scan()
   
   editing = NewBallot(util.Scanner.Text())
-  
-  fmt.Println(editing)
 }
 
 func MainMenu() {
   for {
     util.Clear()
     util.PrintName()
-    fmt.Printf("Editing ballot %s\n", editing.name)
+    fmt.Printf("Editing ballot %s\n", editing.Name)
     
     fmt.Println("\nChoose an option:\n")
     
-    fmt.Println("1 - Edit section")
-    fmt.Println("2 - ...")
+    fmt.Println("1 - Edit sections")
+    fmt.Println("2 - Edit ballot name")
     
     fmt.Println("0 - Go back")
     
@@ -53,13 +55,22 @@ func MainMenu() {
     
     switch op {
       case "1":
+        
         break
       
       case "2":
+        EditBallotName()
         break
       
       case "0":
-        break
+        return
     }
   }
+}
+
+func EditBallotName() {
+  fmt.Print("Enter the ballot name: ")
+  util.Scanner.Scan()
+  
+  editing.Name = util.Scanner.Text()
 }
