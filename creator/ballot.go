@@ -18,23 +18,6 @@ func NewBallot(name string) *Ballot {
   return &Ballot { Name: name }
 }
 
-type Section struct {
-  Name string
-  Candidates []Candidate
-  NumberLength int
-}
-
-func NewSection(name string, numberLen int) *Section {
-  return &Section { Name: name, NumberLength: numberLen }
-}
-
-type Candidate struct {
-  Name string
-  Vice string
-  
-  Number string // yes, a string. Because you can set "05" as a number.
-}
-
 func CreateMenu() {
   fmt.Print("Enter the ballot name: ")
   util.Scanner.Scan()
@@ -84,7 +67,7 @@ func EditSections() {
     
     if len(editing.Sections) > 0 {
       for _, s := range editing.Sections {
-       fmt.Printf("%s | %d candidates | %d numbers\n", s.Name, len(s.Candidates), s.NumberLength); 
+       fmt.Printf("%s | %d candidates | %d number(s)\n", s.Name, len(s.Candidates), s.NumberLength); 
       }
     } else {
       fmt.Println("There are no sections.")
@@ -93,7 +76,10 @@ func EditSections() {
     fmt.Println("\nChoose an option:\n")
     
     fmt.Println("1 - Add new section")
-    fmt.Println("2 - Edit an existing section")
+    
+    if len(editing.Sections) > 0 {
+      fmt.Println("2 - Edit an existing section")
+    }
     
     fmt.Println("0 - Go back")
     
@@ -107,7 +93,24 @@ func EditSections() {
         break
       
       case "2":
+        if len(editing.Sections) <= 0 {
+          break
+        }
         
+        name := GetSectionName()
+        var s *Section = nil
+        
+        for _, sc := range editing.Sections {
+          if sc.Name == name {
+            s = sc
+          }
+        }
+        
+        if s == nil {
+          break
+        }
+        
+        EditSection(s)
         break
       
       case "0":
@@ -141,4 +144,11 @@ func AddSection() {
   }
   
   editing.Sections = append(editing.Sections, NewSection(name, len))
+}
+
+func GetSectionName() string {
+  fmt.Print("Enter the section name: ")
+  util.Scanner.Scan()
+  
+  return util.Scanner.Text()
 }
