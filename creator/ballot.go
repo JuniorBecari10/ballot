@@ -68,7 +68,7 @@ func EditSections() {
     
     if len(editing.Sections) > 0 {
       for _, s := range editing.Sections {
-       fmt.Printf("%s | %d candidates | %d number(s)\n", s.Name, len(s.Candidates), s.NumberLength); 
+       fmt.Printf("%s | candidates: %d | candidate number length: %d\n", s.Name, len(s.Candidates), s.NumberLength); 
       }
     } else {
       fmt.Println("There are no sections.")
@@ -121,7 +121,7 @@ func EditSections() {
 }
 
 func EditBallotName() {
-  fmt.Print("Enter the ballot name: ")
+  fmt.Print("Enter the new ballot name: ")
   util.Scanner.Scan()
   
   editing.Name = util.Scanner.Text()

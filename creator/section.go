@@ -51,10 +51,18 @@ func EditSection(section *Section) {
 }
 
 func EditSectionName(s *Section) {
-  fmt.Print("Enter the section name: ")
+  fmt.Print("Enter the new section name: ")
   util.Scanner.Scan()
   
-  s.Name = util.Scanner.Text()
+  name := util.Scanner.Text()
+  
+  for _, s := range editing.Sections {
+    if strings.ToLower(s.Name) == strings.ToLower(name) {
+      return
+    }
+  }
+  
+  s.Name = name
 }
 
 func EditCandidates(s *Section) {
@@ -126,11 +134,11 @@ func AddCandidate(s *Section) {
   util.Scanner.Scan()
   name := util.Scanner.Text()
   
-  fmt.Print("Enter the vice: ")
+  fmt.Print("Enter the candidate vice: ")
   util.Scanner.Scan()
   vice := util.Scanner.Text()
   
-  fmt.Print("Enter the number: ")
+  fmt.Print("Enter the candidate number: ")
   util.Scanner.Scan()
   number := util.Scanner.Text()
   
@@ -144,6 +152,10 @@ func AddCandidate(s *Section) {
     if c.Number == number {
       return
     }
+  }
+  
+  if len(number) != s.NumberLength {
+    return
   }
   
   s.Candidates = append(s.Candidates, NewCandidate(name, vice, number))
