@@ -26,6 +26,7 @@ func CreateMenu() bool {
   name := util.Scanner.Text()
   
   if name == "" {
+    util.SetErrMsg("The ballot name cannot be empty!")
     return false
   }
   
@@ -38,6 +39,7 @@ func MainMenu() {
     util.Clear()
     util.PrintName()
     fmt.Printf("Editing ballot %s\n", editing.Name)
+    util.PrintErrMsg()
     
     fmt.Println("\nChoose an option:\n")
     
@@ -70,6 +72,7 @@ func EditSections() {
     util.Clear()
     util.PrintName()
     fmt.Printf("Editing ballot %s / sections\n", editing.Name)
+    util.PrintErrMsg()
     
     fmt.Println("\nSections:\n")
     
@@ -134,6 +137,7 @@ func EditBallotName() {
   name := util.Scanner.Text()
   
   if name == "" {
+    util.SetErrMsg("The ballot name cannot be empty!")
     return
   }
   
@@ -148,11 +152,13 @@ func AddSection() {
   name := util.Scanner.Text()
   
   if name == "" {
+    util.SetErrMsg("The section name cannot be empty!")
     return
   }
   
   for _, s := range editing.Sections {
     if strings.ToLower(s.Name) == strings.ToLower(name) {
+      util.SetErrMsg("There is already a section with this name!")
       return
     }
   }
@@ -164,6 +170,7 @@ func AddSection() {
   len, err := strconv.Atoi(lenStr)
   
   if err != nil {
+    util.SetErrMsg("Couldn't process candidate number length: '" + lenStr + "'.")
     return
   }
   

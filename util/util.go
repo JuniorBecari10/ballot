@@ -8,6 +8,7 @@ import (
   "bufio"
 )
 
+var errMsg string
 var Scanner *bufio.Scanner = bufio.NewScanner(os.Stdin)
 
 func Clear() {
@@ -28,4 +29,18 @@ func Clear() {
 
 func PrintName() {
   fmt.Println("Ballot Box Creator")
+}
+
+func SetErrMsg(msg string) {
+  errMsg = msg
+}
+
+func PrintErrMsg() {
+  if errMsg == "" {
+    return
+  }
+  
+  fmt.Print("ERROR: ")
+  fmt.Println(errMsg)
+  errMsg = ""
 }

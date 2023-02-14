@@ -23,6 +23,7 @@ func EditCandidate(s *Section, c *Candidate) {
     util.Clear()
     util.PrintName()
     fmt.Printf("Editing ballot %s / section %s / candidate %s\n", editing.Name, s.Name, c.Name)
+    util.PrintErrMsg()
     
     fmt.Println("\nChoose a field to edit:\n")
     
@@ -42,6 +43,12 @@ func EditCandidate(s *Section, c *Candidate) {
         util.Scanner.Scan()
         
         name := util.Scanner.Text()
+        
+        if name == "" {
+          util.SetErrMsg("Candidate name cannot be empty!")
+          break
+        }
+        
         c.Name = name
         
         break
@@ -63,6 +70,7 @@ func EditCandidate(s *Section, c *Candidate) {
         _, err := strconv.Atoi(number)
   
         if err != nil {
+          util.SetErrMsg("Couldn't process candidate number: '" + number + "'.")
           break
         }
         
@@ -71,6 +79,7 @@ func EditCandidate(s *Section, c *Candidate) {
         for _, c := range s.Candidates {
           if c.Number == number {
             br = true
+            util.SetErrMsg("There is already a candidate with this number!")
             break
           }
         }
@@ -80,10 +89,12 @@ func EditCandidate(s *Section, c *Candidate) {
         }
         
         if len(number) != s.NumberLength {
+          util.SetErrMsg("Candidate number '" + number + "' doesn't match the section's candidate number length of " + s.NumberLength + ".")
           break
         }
         
         if number == "" {
+          util.SetErrMsg("Candidate number cannot be empty!")
           return
         }
         

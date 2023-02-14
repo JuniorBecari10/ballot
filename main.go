@@ -16,6 +16,7 @@ func MainMenu() {
   for {
     util.Clear()
     util.PrintName()
+    util.PrintErrMsg()
     
     fmt.Println("\nChoose an option:\n")
     
