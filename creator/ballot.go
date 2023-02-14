@@ -118,6 +118,7 @@ func EditSections() {
         }
         
         if s == nil {
+          util.SetErrMsg("Couldn't find a section with the name '" + name + "'.")
           break
         }
         

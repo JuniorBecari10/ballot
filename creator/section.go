@@ -145,7 +145,7 @@ func AddCandidate(s *Section) {
   
   if name == "" {
     util.SetErrMsg("Candidate name cannot be empty!")
-    break
+    return
   }
   
   fmt.Print("Enter the candidate vice: ")
@@ -171,7 +171,7 @@ func AddCandidate(s *Section) {
   }
   
   if len(number) != s.NumberLength {
-    util.SetErrMsg("Candidate number '" + number + "' doesn't match the section's candidate number length of " + s.NumberLength + ".")
+    util.SetErrMsg("Candidate number '" + number + "' doesn't match the section's candidate number length of " + strconv.Itoa(s.NumberLength) + ".")
     return
   }
   
