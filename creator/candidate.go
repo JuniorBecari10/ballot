@@ -22,7 +22,7 @@ func EditCandidate(s *Section, c *Candidate) {
   for {
     util.Clear()
     util.PrintName()
-    fmt.Printf("Editing ballot %s / section %s / candidate %s\n", editing.Name, s.Name, c.Name)
+    fmt.Printf("Editing ballot box %s / section %s / candidate %s\n", editing.Name, s.Name, c.Name)
     util.PrintErrMsg()
     
     fmt.Println("\nChoose a field to edit:\n")
@@ -45,7 +45,7 @@ func EditCandidate(s *Section, c *Candidate) {
         name := util.Scanner.Text()
         
         if name == "" {
-          util.SetErrMsg("Candidate name cannot be empty!")
+          util.SetErrMsg("The candidate name cannot be empty!")
           break
         }
         
@@ -89,12 +89,12 @@ func EditCandidate(s *Section, c *Candidate) {
         }
         
         if len(number) != s.NumberLength {
-          util.SetErrMsg("Candidate number '" + number + "' doesn't match the section's candidate number length of " + strconv.Itoa(s.NumberLength) + ".")
+          util.SetErrMsg("The candidate number '" + number + "' doesn't match the section's candidate number length of " + strconv.Itoa(s.NumberLength) + ".")
           break
         }
         
         if number == "" {
-          util.SetErrMsg("Candidate number cannot be empty!")
+          util.SetErrMsg("The candidate number cannot be empty!")
           return
         }
         

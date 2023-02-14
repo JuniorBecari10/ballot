@@ -20,7 +20,7 @@ func NewBallot(name string) *Ballot {
 }
 
 func CreateMenu() bool {
-  fmt.Print("Enter the ballot name: ")
+  fmt.Print("Enter the ballot box name: ")
   util.Scanner.Scan()
   
   name := util.Scanner.Text()
@@ -38,7 +38,7 @@ func MainMenu() {
   for {
     util.Clear()
     util.PrintName()
-    fmt.Printf("Editing ballot %s\n", editing.Name)
+    fmt.Printf("Editing ballot box %s\n", editing.Name)
     util.PrintErrMsg()
     
     fmt.Println("\nChoose an option:\n")
@@ -71,7 +71,7 @@ func EditSections() {
   for {
     util.Clear()
     util.PrintName()
-    fmt.Printf("Editing ballot %s / sections\n", editing.Name)
+    fmt.Printf("Editing ballot box %s / sections\n", editing.Name)
     util.PrintErrMsg()
     
     fmt.Println("\nSections:\n")
@@ -132,13 +132,13 @@ func EditSections() {
 }
 
 func EditBallotName() {
-  fmt.Print("Enter the new ballot name: ")
+  fmt.Print("Enter the new ballot box name: ")
   util.Scanner.Scan()
   
   name := util.Scanner.Text()
   
   if name == "" {
-    util.SetErrMsg("The ballot name cannot be empty!")
+    util.SetErrMsg("The ballot box name cannot be empty!")
     return
   }
   
