@@ -2,22 +2,42 @@ package creator
 
 import (
   "fmt"
-  
-  "ballot/util"
   "strings"
   "strconv"
+  "encoding/json"
+  "io/ioutil"
+  
+  "ballot/util"
 )
 
-var editing *Ballot
-
 type Ballot struct {
-  Name string
-  Sections []*Section  
+  Name     string     `json:"Name"`
+  Sections []*Section `json:Sections`
 }
 
 func NewBallot(name string) *Ballot {
   return &Ballot { Name: name }
 }
+
+func SaveBallot(b *Ballot) {
+  content, err := json.Marshal(b)
+  
+  if err != nil {
+    panic(err)
+  }
+  
+  err = ioutil.WriteFile(b.Name + ".bb", content, 0777) // ModePerm
+  
+  if err != nil {
+    panic(err)
+  }
+}
+
+func LoadBallot(filename string) *Ballot {
+  
+}
+
+var editing *Ballot
 
 func CreateMenu() bool {
   fmt.Print("Enter the ballot box name: ")
@@ -40,11 +60,12 @@ func MainMenu() {
     util.PrintName()
     fmt.Printf("Editing ballot box %s\n", editing.Name)
     util.PrintErrMsg()
+    SaveBallot(editing)
     
     fmt.Println("\nChoose an option:\n")
     
     fmt.Println("1 - Edit sections")
-    fmt.Println("2 - Edit ballot name")
+    fmt.Println("2 - Edit ballot box name")
     
     fmt.Println("0 - Go back")
     
