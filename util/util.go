@@ -68,19 +68,27 @@ func SaveBallot(b *Ballot) {
 // ---
 
 type Ballot struct {
-  Name     string     `json:"Name"`
-  Sections []*Section `json:Sections`
+  Name     string       `json:"Name"`
+  Sections []*Section   `json:Sections`
+  
+  Config   BallotConfig `json:Config`
 }
 
 func NewBallot(name string) *Ballot {
-  return &Ballot { Name: name }
+  return &Ballot { Name: name, Config: BallotConfig { AllowNull: true, AllowBlank: true } }
+}
+
+type BallotConfig struct {
+  AllowNull    bool
+  AllowBlank   bool
+  ShowCandList bool
 }
 
 // ---
 
 type Section struct {
-  Name string
-  Candidates []*Candidate
+  Name         string
+  Candidates   []*Candidate
   NumberLength int
 }
 
@@ -91,8 +99,8 @@ func NewSection(name string, numberLen int) *Section {
 // ---
 
 type Candidate struct {
-  Name string
-  Vice string
+  Name   string
+  Vice   string
   
   Number string // yes, a string. Because you can set "05" as a number.
 }
