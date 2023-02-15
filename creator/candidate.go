@@ -7,18 +7,7 @@ import (
   "strconv"
 )
 
-type Candidate struct {
-  Name string
-  Vice string
-  
-  Number string // yes, a string. Because you can set "05" as a number.
-}
-
-func NewCandidate(name string, vice string, number string) *Candidate {
-  return &Candidate { Name: name, Vice: vice, Number: number }
-}
-
-func EditCandidate(s *Section, c *Candidate) {
+func EditCandidate(s *util.Section, c *util.Candidate) {
   for {
     util.Clear()
     util.PrintName()

@@ -4,40 +4,12 @@ import (
   "fmt"
   "strings"
   "strconv"
-  "encoding/json"
-  "io/ioutil"
   
   "ballot/util"
+  "ballot/run"
 )
 
-type Ballot struct {
-  Name     string     `json:"Name"`
-  Sections []*Section `json:Sections`
-}
-
-func NewBallot(name string) *Ballot {
-  return &Ballot { Name: name }
-}
-
-func SaveBallot(b *Ballot) {
-  content, err := json.Marshal(b)
-  
-  if err != nil {
-    panic(err)
-  }
-  
-  err = ioutil.WriteFile(b.Name + ".bb", content, 0777) // ModePerm
-  
-  if err != nil {
-    panic(err)
-  }
-}
-
-func LoadBallot(filename string) *Ballot {
-  
-}
-
-var editing *Ballot
+var editing *util.Ballot
 
 func CreateMenu() bool {
   fmt.Print("Enter the ballot box name: ")
@@ -50,7 +22,7 @@ func CreateMenu() bool {
     return false
   }
   
-  editing = NewBallot(name)
+  editing = util.NewBallot(name)
   return true
 }
 
@@ -60,12 +32,13 @@ func MainMenu() {
     util.PrintName()
     fmt.Printf("Editing ballot box %s\n", editing.Name)
     util.PrintErrMsg()
-    SaveBallot(editing)
+    util.SaveBallot(editing)
     
     fmt.Println("\nChoose an option:\n")
     
     fmt.Println("1 - Edit sections")
     fmt.Println("2 - Edit ballot box name")
+    fmt.Println("3 - Run election")
     
     fmt.Println("0 - Go back")
     
@@ -80,6 +53,10 @@ func MainMenu() {
       
       case "2":
         EditBallotName()
+        break
+        
+      case "3":
+        run.RunElection(editing)
         break
       
       case "0":
@@ -130,7 +107,7 @@ func EditSections() {
         }
         
         name := GetSectionName()
-        var s *Section = nil
+        var s *util.Section = nil
         
         for _, sc := range editing.Sections {
           if strings.ToLower(sc.Name) == strings.ToLower(name) {
@@ -196,7 +173,7 @@ func AddSection() {
     return
   }
   
-  editing.Sections = append(editing.Sections, NewSection(name, len))
+  editing.Sections = append(editing.Sections, util.NewSection(name, len))
 }
 
 func GetSectionName() string {

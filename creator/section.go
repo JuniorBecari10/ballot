@@ -8,17 +8,7 @@ import (
   "strconv"
 )
 
-type Section struct {
-  Name string
-  Candidates []*Candidate
-  NumberLength int
-}
-
-func NewSection(name string, numberLen int) *Section {
-  return &Section { Name: name, NumberLength: numberLen }
-}
-
-func EditSection(section *Section) {
+func EditSection(section *util.Section) {
   for {
     util.Clear()
     util.PrintName()
@@ -51,7 +41,7 @@ func EditSection(section *Section) {
   }
 }
 
-func EditSectionName(s *Section) {
+func EditSectionName(s *util.Section) {
   fmt.Print("Enter the new section name: ")
   util.Scanner.Scan()
   
@@ -72,7 +62,7 @@ func EditSectionName(s *Section) {
   s.Name = name
 }
 
-func EditCandidates(s *Section) {
+func EditCandidates(s *util.Section) {
   for {
     util.Clear()
     util.PrintName()
@@ -114,7 +104,7 @@ func EditCandidates(s *Section) {
         }
         
         number := GetCandidateNumber()
-        var c *Candidate = nil
+        var c *util.Candidate = nil
         
         for _, cd := range s.Candidates {
           if strings.ToLower(cd.Number) == strings.ToLower(number) {
@@ -138,7 +128,7 @@ func EditCandidates(s *Section) {
 
 // ----
 
-func AddCandidate(s *Section) {
+func AddCandidate(s *util.Section) {
   fmt.Print("Enter the candidate name: ")
   util.Scanner.Scan()
   name := util.Scanner.Text()
@@ -180,7 +170,7 @@ func AddCandidate(s *Section) {
     return
   }
   
-  s.Candidates = append(s.Candidates, NewCandidate(name, vice, number))
+  s.Candidates = append(s.Candidates, util.NewCandidate(name, vice, number))
 }
 
 func GetCandidateNumber() string {
