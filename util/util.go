@@ -75,7 +75,7 @@ type Ballot struct {
 }
 
 func NewBallot(name string) *Ballot {
-  return &Ballot { Name: name, Config: BallotConfig { AllowNull: true, AllowBlank: true } }
+  return &Ballot { Name: name, Config: BallotConfig { AllowNull: true, AllowBlank: true, ShowCandList: true } }
 }
 
 type BallotConfig struct {
