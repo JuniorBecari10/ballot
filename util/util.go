@@ -9,6 +9,7 @@ import (
   "os/exec"
   "runtime"
   "strings"
+  "strconv"
 )
 
 var errMsg string
@@ -68,6 +69,33 @@ func BoolToYes(b bool) string {
   } else {
     return "No"
   }
+}
+
+func GetOrdinal(n int) string {
+  str := strconv.Itoa(n)
+  s := string(str[len(str) - 1])
+  
+  switch s {
+    case "1":
+      return "st"
+    
+    case "2":
+      return "nd"
+    
+    case "3":
+      return "rd"
+    
+    default:
+      return "th"
+  }
+}
+
+func Confirm() bool {
+  fmt.Print("Are you sure? (y/n) ")
+  
+  Scanner.Scan()
+  
+  return strings.ToLower(Scanner.Text()) == "y"
 }
 
 func ConfirmBlank() bool {

@@ -4,6 +4,7 @@ import (
   "fmt"
   
   "ballot/util"
+  "ballot/results"
 )
 
 func RunElection(b *util.Ballot) {
@@ -25,9 +26,9 @@ func RunElection(b *util.Ballot) {
     
     fmt.Printf("\nVoting for section %s:\n\n", s.Name)
     
-    fmt.Println("Candidates:")
-    
     if b.Config.ShowCandList {
+      fmt.Println("Candidates:\n")
+      
       for _, c := range s.Candidates {
         fmt.Printf("%s | vice: %s | number: %s\n", c.Name, c.Vice, c.Number);
       }
@@ -36,16 +37,16 @@ func RunElection(b *util.Ballot) {
     fmt.Println()
     
     if b.Config.AllowBlank {
-      fmt.Println("You're allowed to vote blank in this election. Just press Enter.")
+      fmt.Println("You're allowed to vote blank in this election.")
     }
     
     if b.Config.AllowNull {
-      fmt.Println("You're allowed to vote null in this election. Just type a number of a candidate that doesn't exist inside this section.")
+      fmt.Println("You're allowed to vote null in this election.")
     }
     
     fmt.Println()
     
-    fmt.Print("\n> ")
+    fmt.Print("> ")
     util.Scanner.Scan()
     
     nb := util.Scanner.Text()
@@ -55,6 +56,10 @@ func RunElection(b *util.Ballot) {
       if nb == cd.Number {
         c = cd
       }
+    }
+    
+    if nb == "exit" {
+      results.ShowResults(b, blankVotes, nullVotes)
     }
     
     if nb == "" {
