@@ -1,15 +1,15 @@
 package creator
 
 import (
-  "fmt"
-  "strings"
-  "strconv"
-  
-  "ballot/util"
-  "ballot/run"
+	"fmt"
+	"strconv"
+	"strings"
+
+	"ballot/run"
+	"ballot/util"
 )
 
-var editing *util.Ballot
+var Editing *util.Ballot
 
 func CreateMenu() bool {
   fmt.Print("Enter the ballot box name: ")
@@ -22,7 +22,7 @@ func CreateMenu() bool {
     return false
   }
   
-  editing = util.NewBallot(name)
+  Editing = util.NewBallot(name)
   return true
 }
 
@@ -30,9 +30,9 @@ func MainMenu() {
   for {
     util.Clear()
     util.PrintName()
-    fmt.Printf("Editing ballot box %s\n", editing.Name)
+    fmt.Printf("Editing ballot box %s\n", Editing.Name)
     util.PrintErrMsg()
-    util.SaveBallot(editing)
+    //util.SaveBallot(Editing)
     
     fmt.Println("\nChoose an option:\n")
     
@@ -56,7 +56,7 @@ func MainMenu() {
         break
         
       case "3":
-        run.RunElection(editing)
+        run.RunElection(Editing)
         break
       
       case "0":
@@ -69,13 +69,13 @@ func EditSections() {
   for {
     util.Clear()
     util.PrintName()
-    fmt.Printf("Editing ballot box %s / sections\n", editing.Name)
+    fmt.Printf("Editing ballot box %s / sections\n", Editing.Name)
     util.PrintErrMsg()
     
     fmt.Println("\nSections:\n")
     
-    if len(editing.Sections) > 0 {
-      for _, s := range editing.Sections {
+    if len(Editing.Sections) > 0 {
+      for _, s := range Editing.Sections {
        fmt.Printf("%s | candidates: %d | candidate number length: %d\n", s.Name, len(s.Candidates), s.NumberLength); 
       }
     } else {
@@ -86,7 +86,7 @@ func EditSections() {
     
     fmt.Println("1 - Add new section")
     
-    if len(editing.Sections) > 0 {
+    if len(Editing.Sections) > 0 {
       fmt.Println("2 - Edit an existing section")
     }
     
@@ -102,14 +102,14 @@ func EditSections() {
         break
       
       case "2":
-        if len(editing.Sections) <= 0 {
+        if len(Editing.Sections) <= 0 {
           break
         }
         
         name := GetSectionName()
         var s *util.Section = nil
         
-        for _, sc := range editing.Sections {
+        for _, sc := range Editing.Sections {
           if strings.ToLower(sc.Name) == strings.ToLower(name) {
             s = sc
           }
@@ -140,7 +140,7 @@ func EditBallotName() {
     return
   }
   
-  editing.Name = name
+  Editing.Name = name
 }
 
 // ----
@@ -155,7 +155,7 @@ func AddSection() {
     return
   }
   
-  for _, s := range editing.Sections {
+  for _, s := range Editing.Sections {
     if strings.ToLower(s.Name) == strings.ToLower(name) {
       util.SetErrMsg("There is already a section with this name!")
       return
@@ -173,7 +173,7 @@ func AddSection() {
     return
   }
   
-  editing.Sections = append(editing.Sections, util.NewSection(name, len))
+  Editing.Sections = append(Editing.Sections, util.NewSection(name, len))
 }
 
 func GetSectionName() string {

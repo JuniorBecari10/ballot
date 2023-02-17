@@ -1,18 +1,18 @@
-package creator 
+package creator
 
 import (
-  "fmt"
-  
-  "ballot/util"
-  "strings"
-  "strconv"
+	"fmt"
+
+	"ballot/util"
+	"strconv"
+	"strings"
 )
 
 func EditSection(section *util.Section) {
   for {
     util.Clear()
     util.PrintName()
-    fmt.Printf("Editing ballot box %s / section %s\n", editing.Name, section.Name)
+    fmt.Printf("Editing ballot box %s / section %s\n", Editing.Name, section.Name)
     util.PrintErrMsg()
     
     fmt.Println("\nChoose an option:\n")
@@ -52,7 +52,7 @@ func EditSectionName(s *util.Section) {
     return
   }
   
-  for _, s := range editing.Sections {
+  for _, s := range Editing.Sections {
     if strings.ToLower(s.Name) == strings.ToLower(name) {
       util.SetErrMsg("There is already a section with this name!")
       return
@@ -66,7 +66,7 @@ func EditCandidates(s *util.Section) {
   for {
     util.Clear()
     util.PrintName()
-    fmt.Printf("Editing ballot %s / section %s / candidates\n", editing.Name, s.Name)
+    fmt.Printf("Editing ballot %s / section %s / candidates\n", Editing.Name, s.Name)
     util.PrintErrMsg()
     
     fmt.Println("\nCandidates:\n")
@@ -99,7 +99,7 @@ func EditCandidates(s *util.Section) {
         break
       
       case "2":
-        if len(editing.Sections) <= 0 {
+        if len(Editing.Sections) <= 0 {
           break
         }
         

@@ -1,17 +1,17 @@
 package creator
 
 import (
-  "fmt"
-  
-  "ballot/util"
-  "strconv"
+	"fmt"
+
+	"ballot/util"
+	"strconv"
 )
 
 func EditCandidate(s *util.Section, c *util.Candidate) {
   for {
     util.Clear()
     util.PrintName()
-    fmt.Printf("Editing ballot box %s / section %s / candidate %s\n", editing.Name, s.Name, c.Name)
+    fmt.Printf("Editing ballot box %s / section %s / candidate %s\n", Editing.Name, s.Name, c.Name)
     util.PrintErrMsg()
     
     fmt.Println("\nChoose a field to edit:\n")

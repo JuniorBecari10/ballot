@@ -8,6 +8,8 @@ import (
 
 func RunElection(b *util.Ballot) {
   sectionIndex := 0
+  blankVotes := 0
+  nullVotes := 0
   
   for {
     util.Clear()
@@ -43,6 +45,30 @@ func RunElection(b *util.Ballot) {
           c = cd
         }
       }
+      
+      if nb == "" {
+        if b.Config.AllowBlank {
+          blankVotes++
+          sectionIndex++
+        } else {
+          util.SetErrMsg("You cannot vote blank!")
+        }
+        
+        continue
+      }
+      
+      if c == nil {
+        if b.Config.AllowNull {
+          nullVotes++
+          sectionIndex++
+        } else {
+          util.SetErrMsg("You cannot vote null!")
+        }
+        
+        continue
+      }
+      
+      // reaching here means that the user has voted in an valid candidate
       
       
     }
