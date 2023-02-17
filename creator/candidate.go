@@ -20,7 +20,7 @@ func EditCandidate(s *util.Section, c *util.Candidate) {
     fmt.Printf("2 - Vice: %s\n", c.Vice)
     fmt.Printf("3 - Number: %s\n", c.Number)
     
-    fmt.Println("0 - Go back")
+    fmt.Println("\n0 - Go back")
     
     fmt.Print("\n> ")
     util.Scanner.Scan()

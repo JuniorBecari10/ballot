@@ -20,7 +20,7 @@ func EditSection(section *util.Section) {
     fmt.Println("1 - Edit candidates")
     fmt.Println("2 - Edit section name")
     
-    fmt.Println("0 - Go back")
+    fmt.Println("\n0 - Go back")
     
     fmt.Print("\n> ")
     util.Scanner.Scan()
@@ -66,7 +66,7 @@ func EditCandidates(s *util.Section) {
   for {
     util.Clear()
     util.PrintName()
-    fmt.Printf("Editing ballot %s / section %s / candidates\n", Editing.Name, s.Name)
+    fmt.Printf("Editing ballot box %s / section %s / candidates\n", Editing.Name, s.Name)
     util.PrintErrMsg()
     
     fmt.Println("\nCandidates:\n")
@@ -87,7 +87,7 @@ func EditCandidates(s *util.Section) {
       fmt.Println("2 - Edit an existing candidate")
     }
     
-    fmt.Println("0 - Go back")
+    fmt.Println("\n0 - Go back")
     
     fmt.Print("\n> ")
     util.Scanner.Scan()

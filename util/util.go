@@ -62,6 +62,14 @@ func SaveBallot(b *Ballot) {
   }
 }
 
+func BoolToYes(b bool) string {
+  if b {
+    return "Yes"
+  } else {
+    return "No"
+  }
+}
+
 func ConfirmBlank() bool {
   fmt.Println("You're going to vote blank.")
   fmt.Print("Do you confirm? (y/n) ")

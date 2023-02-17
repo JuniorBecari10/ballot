@@ -38,12 +38,13 @@ func MainMenu() {
     
     fmt.Println("1 - Edit sections")
     fmt.Println("2 - Edit ballot box name")
+    fmt.Println("3 - Edit configurations")
     
     if len(Editing.Sections) > 0 {
-      fmt.Println("3 - Run election")
+      fmt.Println("4 - Run election")
     }
     
-    fmt.Println("0 - Go back")
+    fmt.Println("\n0 - Go back")
     
     fmt.Print("\n> ")
     util.Scanner.Scan()
@@ -57,11 +58,52 @@ func MainMenu() {
       case "2":
         EditBallotName()
         break
-        
+      
       case "3":
+        EditConfigs()
+        break
+      
+      case "4":
         if len(Editing.Sections) > 0 {
           run.RunElection(Editing)
         }
+        break
+      
+      case "0":
+        return
+    }
+  }
+}
+
+func EditConfigs() {
+  for {
+    util.Clear()
+    util.PrintName()
+    fmt.Printf("Editing ballot box %s / configurations\n", Editing.Name)
+    util.PrintErrMsg()
+    
+    fmt.Println("\nConfigurations:\n")
+    
+    fmt.Printf("1 - Allow null votes: %s\n", util.BoolToYes(Editing.Config.AllowNull))
+    fmt.Printf("2 - Allow blank votes: %s\n", util.BoolToYes(Editing.Config.AllowBlank))
+    fmt.Printf("3 - Show candidate list: %s\n", util.BoolToYes(Editing.Config.ShowCandList))
+    
+    fmt.Println("\n0 - Go back")
+    
+    fmt.Print("\n> ")
+    util.Scanner.Scan()
+    
+    switch util.Scanner.Text() {
+      case "1":
+        Editing.Config.AllowNull = !Editing.Config.AllowNull
+        break
+      
+      case "2":
+        Editing.Config.AllowBlank = !Editing.Config.AllowBlank
+        break
+      
+      case "3":
+        Editing.Config.ShowCandList = !Editing.Config.ShowCandList
         break
       
       case "0":
@@ -95,7 +137,7 @@ func EditSections() {
       fmt.Println("2 - Edit an existing section")
     }
     
-    fmt.Println("0 - Go back")
+    fmt.Println("\n0 - Go back")
     
     fmt.Print("\n> ")
     util.Scanner.Scan()
