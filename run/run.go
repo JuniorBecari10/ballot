@@ -12,7 +12,7 @@ func RunElection(b *util.Ballot) {
   nullVotes := 0
   
   for {
-    if sectionIndex > len(b.Sections) {
+    if sectionIndex >= len(b.Sections) {
       sectionIndex = 0
     }
     
@@ -34,7 +34,11 @@ func RunElection(b *util.Ballot) {
     }
     
     if b.Config.AllowBlank {
-      fmt.Println("\nYou're allowed to vote blank in this election. Just press Enter.\n")
+      fmt.Println("\nYou're allowed to vote blank in this election. Just press Enter.")
+    }
+    
+    if b.Config.AllowNull {
+      fmt.Println("\nYou're allowed to vote null in this election. Just type a number of a candidate that doesn't exist inside this section.")
     }
     
     fmt.Print("\n> ")
@@ -72,7 +76,6 @@ func RunElection(b *util.Ballot) {
     }
      
     // reaching here means that the user has voted in an valid candidate
-    
-    
+    c.Votes++
   }
 }

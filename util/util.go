@@ -1,64 +1,83 @@
 package util
 
 import (
-	"bufio"
-	"encoding/json"
-	"fmt"
-	"io/ioutil"
-	"os"
-	"os/exec"
-	"runtime"
+  "bufio"
+  "encoding/json"
+  "fmt"
+  "io/ioutil"
+  "os"
+  "os/exec"
+  "runtime"
+  "strings"
 )
 
 var errMsg string
 var Scanner *bufio.Scanner = bufio.NewScanner(os.Stdin)
 
 func Clear() {
-	switch runtime.GOOS {
-	case "linux":
-		cmd := exec.Command("clear")
-		cmd.Stdout = os.Stdout
-		cmd.Run()
-		break
+  switch runtime.GOOS {
+  case "linux":
+    cmd := exec.Command("clear")
+    cmd.Stdout = os.Stdout
+    cmd.Run()
+    break
 
-	case "windows":
-		cmd := exec.Command("cmd", "/c", "cls")
-		cmd.Stdout = os.Stdout
-		cmd.Run()
-		break
-	}
+  case "windows":
+    cmd := exec.Command("cmd", "/c", "cls")
+    cmd.Stdout = os.Stdout
+    cmd.Run()
+    break
+  }
 }
 
 func PrintName() {
-	fmt.Println("Ballot Box Creator")
+  fmt.Println("Ballot Box Creator")
 }
 
 func SetErrMsg(msg string) {
-	errMsg = msg
+  errMsg = msg
 }
 
 func PrintErrMsg() {
-	if errMsg == "" {
-		return
-	}
+  if errMsg == "" {
+    return
+  }
 
-	fmt.Print("ERROR: ")
-	fmt.Println(errMsg)
-	errMsg = ""
+  fmt.Print("ERROR: ")
+  fmt.Println(errMsg)
+  errMsg = ""
 }
 
 func SaveBallot(b *Ballot) {
-	content, err := json.Marshal(b)
+  content, err := json.Marshal(b)
 
-	if err != nil {
-		panic(err)
-	}
+  if err != nil {
+    panic(err)
+  }
 
-	err = ioutil.WriteFile(b.Name + ".bb", content, 0777) // ModePerm
+  err = ioutil.WriteFile(b.Name + ".bb", content, 0777) // ModePerm
 
-	if err != nil {
-		panic(err)
-	}
+  if err != nil {
+    panic(err)
+  }
+}
+
+func ConfirmBlank() bool {
+  fmt.Println("You're going to vote blank.")
+  fmt.Print("Do you confirm? (y/n)")
+  
+  Scanner.Scan()
+  
+  return strings.ToLower(Scanner.Text()) == "y"
+}
+
+func ConfirmNull() bool {
+  fmt.Println("You're going to vote null.")
+  fmt.Print("Do you confirm? (y/n)")
+  
+  Scanner.Scan()
+  
+  return strings.ToLower(Scanner.Text()) == "y"
 }
 
 //func LoadBallot(filename string) *Ballot {
@@ -68,45 +87,45 @@ func SaveBallot(b *Ballot) {
 // ---
 
 type Ballot struct {
-	Name     string     `json:"Name"`
-	Sections []*Section `json:"Sections"`
+  Name     string     `json:"Name"`
+  Sections []*Section `json:"Sections"`
 
-	Config BallotConfig `json:"Config"`
+  Config BallotConfig `json:"Config"`
 }
 
 func NewBallot(name string) *Ballot {
-	return &Ballot { Name: name, Config: BallotConfig {AllowNull: true, AllowBlank: true, ShowCandList: true } }
+  return &Ballot { Name: name, Config: BallotConfig {AllowNull: true, AllowBlank: true, ShowCandList: true } }
 }
 
 type BallotConfig struct {
-	AllowNull    bool
-	AllowBlank   bool
-	ShowCandList bool
+  AllowNull    bool
+  AllowBlank   bool
+  ShowCandList bool
 }
 
 // ---
 
 type Section struct {
-	Name         string
-	Candidates   []*Candidate
-	NumberLength int
+  Name         string
+  Candidates   []*Candidate
+  NumberLength int
 }
 
 func NewSection(name string, numberLen int) *Section {
-	return &Section { Name: name, NumberLength: numberLen }
+  return &Section { Name: name, NumberLength: numberLen }
 }
 
 // ---
 
 type Candidate struct {
-	Name string
-	Vice string
+  Name   string
+  Vice   string
 
-	Number string // yes, a string. Because you can set "05" as a number.
+  Number string // yes, a string. Because you can set "05" as a number.
 
-	Votes int // it's necessary.
+  Votes  int // it's necessary.
 }
 
 func NewCandidate(name string, vice string, number string) *Candidate {
-	return &Candidate { Name: name, Vice: vice, Number: number }
+  return &Candidate { Name: name, Vice: vice, Number: number }
 }
