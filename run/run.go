@@ -33,13 +33,17 @@ func RunElection(b *util.Ballot) {
       }
     }
     
+    fmt.Println()
+    
     if b.Config.AllowBlank {
-      fmt.Println("\nYou're allowed to vote blank in this election. Just press Enter.")
+      fmt.Println("You're allowed to vote blank in this election. Just press Enter.")
     }
     
     if b.Config.AllowNull {
-      fmt.Println("\nYou're allowed to vote null in this election. Just type a number of a candidate that doesn't exist inside this section.")
+      fmt.Println("You're allowed to vote null in this election. Just type a number of a candidate that doesn't exist inside this section.")
     }
+    
+    fmt.Println()
     
     fmt.Print("\n> ")
     util.Scanner.Scan()
@@ -55,8 +59,10 @@ func RunElection(b *util.Ballot) {
     
     if nb == "" {
       if b.Config.AllowBlank {
-        blankVotes++
-        sectionIndex++
+        if util.ConfirmBlank() {
+          blankVotes++
+          sectionIndex++
+        }
       } else {
         util.SetErrMsg("You cannot vote blank!")
       }
@@ -66,8 +72,10 @@ func RunElection(b *util.Ballot) {
     
     if c == nil {
       if b.Config.AllowNull {
-        nullVotes++
-        sectionIndex++
+        if util.ConfirmNull() {
+          nullVotes++
+          sectionIndex++
+        }
       } else {
         util.SetErrMsg("You cannot vote null!")
       }
@@ -76,6 +84,9 @@ func RunElection(b *util.Ballot) {
     }
      
     // reaching here means that the user has voted in an valid candidate
-    c.Votes++
+    if util.ConfirmCand(c) {
+      c.Votes++
+      sectionIndex++
+    }
   }
 }

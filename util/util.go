@@ -64,7 +64,7 @@ func SaveBallot(b *Ballot) {
 
 func ConfirmBlank() bool {
   fmt.Println("You're going to vote blank.")
-  fmt.Print("Do you confirm? (y/n)")
+  fmt.Print("Do you confirm? (y/n) ")
   
   Scanner.Scan()
   
@@ -73,7 +73,16 @@ func ConfirmBlank() bool {
 
 func ConfirmNull() bool {
   fmt.Println("You're going to vote null.")
-  fmt.Print("Do you confirm? (y/n)")
+  fmt.Print("Do you confirm? (y/n) ")
+  
+  Scanner.Scan()
+  
+  return strings.ToLower(Scanner.Text()) == "y"
+}
+
+func ConfirmCand(c *Candidate) bool {
+  fmt.Printf("You're going to vote for the candidate %s.\n", c.Name)
+  fmt.Print("Do you confirm? (y/n) ")
   
   Scanner.Scan()
   
