@@ -44,9 +44,7 @@ func RunElection(b *util.Ballot) {
         }
       }
       
-      if nb == "" {
-        
-      }
+      
     }
   }
 }

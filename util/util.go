@@ -69,9 +69,9 @@ func SaveBallot(b *Ballot) {
 
 type Ballot struct {
   Name     string       `json:"Name"`
-  Sections []*Section   `json:Sections`
+  Sections []*Section   `json:"Sections"`
   
-  Config   BallotConfig `json:Config`
+  Config   BallotConfig `json:"Config"`
 }
 
 func NewBallot(name string) *Ballot {
@@ -106,5 +106,16 @@ type Candidate struct {
 }
 
 func NewCandidate(name string, vice string, number string) *Candidate {
-  return &Candidate { Name: name, Vice: vice, Number: number }
+  return &Candidate { name, vice, number }
+}
+
+// ---
+
+type VotedCandidate struct {
+  Candidate   *Candidate
+  NumberVotes int
+}
+
+func NewVotedCandidate(c *Candidate, nv int) *VotedCandidate {
+  return &VotedCandidate { c, nv }
 }
