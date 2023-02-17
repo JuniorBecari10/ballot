@@ -38,7 +38,10 @@ func MainMenu() {
     
     fmt.Println("1 - Edit sections")
     fmt.Println("2 - Edit ballot box name")
-    fmt.Println("3 - Run election")
+    
+    if len(Editing.Sections) > 0 {
+      fmt.Println("3 - Run election")
+    }
     
     fmt.Println("0 - Go back")
     
@@ -56,7 +59,9 @@ func MainMenu() {
         break
         
       case "3":
-        run.RunElection(Editing)
+        if len(Editing.Sections) > 0 {
+          run.RunElection(Editing)
+        }
         break
       
       case "0":
