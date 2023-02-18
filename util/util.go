@@ -128,6 +128,14 @@ func Confirm() bool {
   return strings.ToLower(Scanner.Text()) == "y"
 }
 
+func ConfirmMsg(msg string) bool {
+  fmt.Print(msg)
+  
+  Scanner.Scan()
+  
+  return strings.ToLower(Scanner.Text()) == "y"
+}
+
 func ConfirmBlank() bool {
   fmt.Println("You're going to vote blank.")
   fmt.Print("Do you confirm? (y/n) ")
