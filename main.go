@@ -46,6 +46,16 @@ func MainMenu() {
         break
       
       case "2":
+        filename := creator.LoadBallot()
+        ballot, err := util.LoadBallot(filename)
+        
+        if err != nil {
+          util.SetErrMsg(err.Error())
+          break
+        }
+        
+        creator.Editing = ballot
+        
         break
       
       case "3":

@@ -10,6 +10,7 @@ import (
   "runtime"
   "strings"
   "strconv"
+  "errors"
 )
 
 var errMsg string
@@ -61,6 +62,29 @@ func SaveBallot(b *Ballot) {
   if err != nil {
     panic(err)
   }
+}
+
+func LoadBallot(filename string) (*Ballot, error) {
+  file, err := os.Open(filename)
+  
+  if err != nil {
+    return nil, errors.New("Cannot open file '" + filename + "'.")
+  }
+  
+  defer file.Close()
+  
+  bytes, _ := ioutil.ReadAll(file)
+  
+  var b Ballot
+  err = json.Unmarshal(bytes, &b)
+  
+  if err != nil {
+    fmt.Println(err)
+    panic(err)
+    return nil, errors.New("Cannot parse ballot box from file '" + filename + "'.")
+  }
+  
+  return &b, nil
 }
 
 func BoolToYes(b bool) string {
@@ -125,10 +149,6 @@ func ConfirmCand(c *Candidate) bool {
   return strings.ToLower(Scanner.Text()) == "y"
 }
 
-//func LoadBallot(filename string) *Ballot {
-//
-//}
-
 // ---
 
 type Ballot struct {
@@ -143,17 +163,17 @@ func NewBallot(name string) *Ballot {
 }
 
 type BallotConfig struct {
-  AllowNull    bool
-  AllowBlank   bool
-  ShowCandList bool
+  AllowNull    bool `json:"AllowNull"`
+  AllowBlank   bool `json:"AllowBlank"`
+  ShowCandList bool `json:"ShowCandList"`
 }
 
 // ---
 
 type Section struct {
-  Name         string
-  Candidates   []*Candidate
-  NumberLength int
+  Name         string        `json:"Name"`
+  Candidates   []*Candidate  `json:"Candidates"`
+  NumberLength int           `json:"NumberLength"`
 }
 
 func NewSection(name string, numberLen int) *Section {
@@ -163,12 +183,12 @@ func NewSection(name string, numberLen int) *Section {
 // ---
 
 type Candidate struct {
-  Name   string
-  Vice   string
+  Name   string `json:"Name"`
+  Vice   string `json:"Vice"`
 
-  Number string // yes, a string. Because you can set "05" as a number.
+  Number string `json:"Number"` // yes, a string. Because you can set "05" as a number.
 
-  Votes  int // it's necessary.
+  Votes  int    `json:"Votes"`
 }
 
 func NewCandidate(name string, vice string, number string) *Candidate {

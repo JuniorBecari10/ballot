@@ -25,7 +25,7 @@ func ShowResults(b *util.Ballot, blank, null int) {
       
       for i, c := range s.Candidates {
         fmt.Printf("%d%s - %s | %d votes\n", i + 1, util.GetOrdinal(i + 1), c.Name, c.Votes)
-      }
+      }// reset votes
       
       fmt.Println()
       

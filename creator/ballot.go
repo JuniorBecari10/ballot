@@ -26,13 +26,21 @@ func CreateMenu() bool {
   return true
 }
 
+func LoadBallot() string {
+  fmt.Print("Enter the file name: ")
+  util.Scanner.Scan()
+  
+  name := util.Scanner.Text()
+  return name
+}
+
 func MainMenu() {
   for {
     util.Clear()
     util.PrintName()
     fmt.Printf("Editing ballot box %s\n", Editing.Name)
     util.PrintErrMsg()
-    //util.SaveBallot(Editing)
+    util.SaveBallot(Editing)
     
     fmt.Println("\nChoose an option:\n")
     
