@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"strings"
 
 	"ballot/creator"
 	"ballot/util"
@@ -47,6 +48,11 @@ func MainMenu() {
       
       case "2":
         filename := creator.LoadBallot()
+        
+        if !strings.HasSuffix(filename, ".bb") {
+          filename += ".bb"
+        }
+        
         ballot, err := util.LoadBallot(filename)
         
         if err != nil {
@@ -55,7 +61,7 @@ func MainMenu() {
         }
         
         creator.Editing = ballot
-        
+        creator.MainMenu()
         break
       
       case "3":

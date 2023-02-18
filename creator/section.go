@@ -14,6 +14,7 @@ func EditSection(section *util.Section) {
     util.PrintName()
     fmt.Printf("Editing ballot box %s / section %s\n", Editing.Name, section.Name)
     util.PrintErrMsg()
+    util.SaveBallot(Editing)
     
     fmt.Println("\nChoose an option:\n")
     
@@ -68,6 +69,7 @@ func EditCandidates(s *util.Section) {
     util.PrintName()
     fmt.Printf("Editing ballot box %s / section %s / candidates\n", Editing.Name, s.Name)
     util.PrintErrMsg()
+    util.SaveBallot(Editing)
     
     fmt.Println("\nCandidates:\n")
     

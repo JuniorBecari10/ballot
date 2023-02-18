@@ -89,6 +89,7 @@ func EditConfigs() {
     util.PrintName()
     fmt.Printf("Editing ballot box %s / configurations\n", Editing.Name)
     util.PrintErrMsg()
+    util.SaveBallot(Editing)
     
     fmt.Println("\nConfigurations:\n")
     
@@ -126,6 +127,7 @@ func EditSections() {
     util.PrintName()
     fmt.Printf("Editing ballot box %s / sections\n", Editing.Name)
     util.PrintErrMsg()
+    util.SaveBallot(Editing)
     
     fmt.Println("\nSections:\n")
     

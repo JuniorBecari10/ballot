@@ -13,6 +13,7 @@ func EditCandidate(s *util.Section, c *util.Candidate) {
     util.PrintName()
     fmt.Printf("Editing ballot box %s / section %s / candidate %s\n", Editing.Name, s.Name, c.Name)
     util.PrintErrMsg()
+    util.SaveBallot(Editing)
     
     fmt.Println("\nChoose a field to edit:\n")
     

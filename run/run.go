@@ -59,7 +59,11 @@ func RunElection(b *util.Ballot) {
     }
     
     if nb == "exit" {
-      results.ShowResults(b, blankVotes, nullVotes)
+      if util.Confirm() {
+        results.ShowResults(b, blankVotes, nullVotes)
+        util.ClearVotes(b)
+        return
+      }
     }
     
     if nb == "" {

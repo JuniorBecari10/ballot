@@ -50,6 +50,14 @@ func PrintErrMsg() {
   errMsg = ""
 }
 
+func ClearVotes(b *Ballot) {
+  for _, s := range b.Sections {
+    for _, c := range s.Candidates {
+      c.Votes = 0
+    }
+  }
+}
+
 func SaveBallot(b *Ballot) {
   content, err := json.Marshal(b)
 
@@ -79,8 +87,6 @@ func LoadBallot(filename string) (*Ballot, error) {
   err = json.Unmarshal(bytes, &b)
   
   if err != nil {
-    fmt.Println(err)
-    panic(err)
     return nil, errors.New("Cannot parse ballot box from file '" + filename + "'.")
   }
   
